@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-
+import errorImage from '@/public/error.svg';
 interface ErrorPageProp {
 	error: Error;
 	reset: () => void;
@@ -11,7 +11,7 @@ const ErrorPage = ({ error, reset }: ErrorPageProp) => {
 	return (
 		<div className='fix-height flex w-full items-center justify-center overflow-hidden bg-gray-100'>
 			<div className='flex flex-col items-center space-y-4 p-10'>
-				<Image src='/error.svg' priority alt='Error' width={'300'} height={'300'} />
+				<Image src={errorImage} alt='Error' />
 				<h1 className='text-6xl font-bold text-gray-800'>Oops!</h1>
 				<p className='text-2xl text-gray-600'>Something went wrong.</p>
 				<p className='text-lg text-gray-600'>Error Message: {error.message}</p>
