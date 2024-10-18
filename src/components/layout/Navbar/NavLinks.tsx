@@ -18,11 +18,16 @@ const navLinks = [
 	},
 ];
 
-export default function NavLinks() {
+export default function NavLinks({
+	setOpen,
+}: {
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
 	return (
-		<div className='flex flex-col space-y-2 md:flex-row md:items-center md:space-x-4 md:space-y-0 '>
+		<div className='flex flex-col space-y-2 md:flex-row md:items-center md:space-x-4 md:space-y-0'>
 			{navLinks.map((link, index) => (
 				<Link
+					onClick={() => setOpen(false)}
 					key={index}
 					href={link.href}
 					className={`flex items-center gap-2 rounded-full px-3 py-[6px] text-sm md:text-base lg:text-lg ${link.classes}`}

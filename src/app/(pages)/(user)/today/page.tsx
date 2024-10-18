@@ -1,11 +1,10 @@
-import { Card } from '@/components/ui/card';
-import React from 'react';
-import { CalendarIcon } from '@radix-ui/react-icons';
-import TodayNavbar from '@/app/(pages)/(user)/today/TodayNavbar';
+import SubmissionPreview from '@/app/(pages)/(user)/today/SubmissionPreview';
+import TodaySubmission from '@/app/(pages)/(user)/today/TodaySubmission';
 const Today = () => {
 	return (
-		<div className='container mx-auto my-8 rounded-md bg-card shadow-md'>
-			<TodayNavbar />
+		<div className='mx-auto flex gap-6 rounded-md bg-transparent px-10 shadow-none max-md:px-3'>
+			<TodaySubmission />
+			<SubmissionPreview />
 		</div>
 	);
 };

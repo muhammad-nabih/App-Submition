@@ -25,7 +25,7 @@ interface NavbarProps {
 
 export default function Navbar({ user }: NavbarProps) {
 	const [isOpen, setIsOpen] = useState(false);
-	user = undefined;
+	// user = undefined;
 	return (
 		<nav className='max-h-24 bg-white px-3 py-2 shadow-sm md:px-6 md:py-5'>
 			<div className='flex items-center justify-between px-2 py-3 md:px-6'>
@@ -33,7 +33,7 @@ export default function Navbar({ user }: NavbarProps) {
 				{user ? (
 					<>
 						<div className='hidden md:flex'>
-							<NavLinks />
+							<NavLinks setOpen={setIsOpen} />
 						</div>
 
 						<div className='flex items-center gap-2'>
@@ -49,7 +49,7 @@ export default function Navbar({ user }: NavbarProps) {
 									side='right'
 									className='w-[240px] pt-12 sm:w-[300px]'>
 									<SheetTitle aria-describedby='sheet-description'>
-										<NavLinks />
+										<NavLinks setOpen={setIsOpen} />
 									</SheetTitle>
 								</SheetContent>
 							</Sheet>
