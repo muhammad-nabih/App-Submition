@@ -40,6 +40,11 @@ const config: Config = {
 					hover: '#86b022',
 					foreground: 'hsl(var(--accent-foreground))',
 				},
+				submit: {
+					DEFAULT: '#A8DC2A33',
+					hover: '#A8DC2A',
+					foreground: 'hsl(var(--accent-foreground))',
+				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))',
@@ -53,6 +58,11 @@ const config: Config = {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)',
+			},
+			fontFamily: {
+				'body-1': 'var(--body-1-font-family)',
+				'body-2': 'var(--body-2-font-family)',
+				h1: 'var(--h1-font-family)',
 			},
 		},
 	},

@@ -90,11 +90,6 @@ export default function UserMenu({ user }: UserMenuProps) {
 								</DropdownMenuItem>
 
 								<DropdownMenuItem className='flex cursor-pointer items-center space-x-2 rounded-md p-2 text-sm transition-colors hover:bg-accent/10'>
-									<Bell className='h-4 w-4 text-muted-foreground' />
-									<span>Notifications</span>
-								</DropdownMenuItem>
-
-								<DropdownMenuItem className='flex cursor-pointer items-center space-x-2 rounded-md p-2 text-sm transition-colors hover:bg-accent/10'>
 									<Settings className='h-4 w-4 text-muted-foreground' />
 									<span>Settings</span>
 								</DropdownMenuItem>
