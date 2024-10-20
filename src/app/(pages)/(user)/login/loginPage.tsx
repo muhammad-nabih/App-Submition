@@ -12,7 +12,6 @@ export default function LoginPage() {
 							Login to your account
 						</CardTitle>
 					</CardHeader>
-
 					<CardContent>
 						<LoginForm />
 					</CardContent>

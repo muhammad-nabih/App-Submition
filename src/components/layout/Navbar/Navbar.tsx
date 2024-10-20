@@ -1,103 +1,69 @@
 'use client';
+
 import { useState } from 'react';
-import Link from 'next/link';
-import { Menu } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import {
-	Sheet,
-	SheetContent,
-	SheetTrigger,
-	SheetHeader,
-	SheetTitle,
-	SheetDescription,
-} from '@/components/ui/sheet';
+import { User } from '@/types/types';
 import Logo from './Logo';
-import NavLinks from './NavLinks';
-import UserMenu from './UserMenu';
+import AllLinks from '@/components/layout/Navbar/AllLinks';
+import { Menu, X } from 'lucide-react';
+import NavLinks from '@/components/layout/Navbar/NavLinks';
+import UserDetails from '@/components/layout/Navbar/UserDetails';
+import Image from 'next/image';
+import logout from '@/public/icons/logout.svg';
+import Link from 'next/link';
+import Logout from '@/components/layout/Navbar/Logout';
 
 interface NavbarProps {
-	user?: {
-		name: string;
-		role: string;
-		avatar: string;
-	};
+	user?: User;
 }
 
-export default function Navbar({ user }: NavbarProps) {
+export default function Component({ user }: NavbarProps = {}) {
 	const [isOpen, setIsOpen] = useState(false);
-	// user = undefined;
+
+	const toggleMenu = () => setIsOpen(!isOpen);
+
 	return (
-		<nav className='max-h-24 bg-white px-3 py-2 shadow-sm md:px-6 md:py-5'>
-			<div className='flex items-center justify-between px-2 py-3 md:px-6'>
+		<nav className='relative flex max-h-24 items-center px-3 py-2 shadow-sm max-sm:px-1 max-sm:py-1 md:px-2 md:py-5'>
+			<div className='flex w-full items-center justify-between px-2 py-3 md:px-6'>
 				<Logo />
-				{user ? (
-					<>
-						<div className='hidden md:flex'>
+
+				<AllLinks setIsOpen={setIsOpen} user={user} />
+
+				<button className='md:hidden' onClick={toggleMenu}>
+					{isOpen ? <X size={24} /> : <Menu size={24} />}
+				</button>
+			</div>
+
+			<div
+				className={`fixed left-0 top-[78px] z-10 flex w-full flex-col items-end justify-start gap-4 overflow-hidden bg-[#333333a7] transition-all duration-300 ease-in-out ${
+					isOpen ? 'h-[94vh]' : 'h-0'
+				}`}>
+				<div
+					className={`left-0 top-0 z-10 flex w-full flex-col items-end justify-start gap-4 overflow-hidden bg-background transition-all duration-300 ease-in-out ${
+						isOpen ? 'h-[250px]' : 'h-0'
+					}`}>
+					<div className='absolute left-0 top-0 z-50 w-full px-4'>
+						{user && <UserDetails user={user} />}
+
+						<div className='mb-4 w-full overflow-hidden'>
+							<hr className='border-[#00150b1a] [border-top-style:solid]' />
+						</div>
+
+						<div className='flex justify-end'>
 							<NavLinks setOpen={setIsOpen} />
 						</div>
 
-						<div className='flex items-center gap-2'>
-							<UserMenu user={user} />
-							<Sheet open={isOpen} onOpenChange={setIsOpen}>
-								<SheetTrigger asChild>
-									<Button variant='ghost' size='icon' className='md:hidden'>
-										<Menu className='h-6 w-6' />
-										<span className='sr-only'>Toggle menu</span>
-									</Button>
-								</SheetTrigger>
-								<SheetContent
-									side='right'
-									className='w-[240px] pt-12 sm:w-[300px]'>
-									<SheetTitle aria-describedby='sheet-description'>
-										<NavLinks setOpen={setIsOpen} />
-									</SheetTitle>
-								</SheetContent>
-							</Sheet>
-						</div>
-					</>
-				) : (
-					<div className='flex items-center gap-4'>
-						<div className='hidden items-center gap-2 md:flex'>
-							<Link href='/login' passHref>
-								<Button
-									className='bg-primary text-primary-dark'
-									variant='ghost'>
-									Login
-								</Button>
-							</Link>
-							<Link href='/register' passHref>
-								<Button className='bg-primary text-primary-dark'>
-									Register
-								</Button>
+						<div className='mt-3 flex justify-end'>
+							<Link
+								href='/'
+								className='flex items-center rounded-full px-3 transition-colors duration-200 hover:bg-[#fbe8e8]'>
+								<Image src={logout} className='h-8' alt='logout icon' />
+								<span className='overflow-hidden whitespace-nowrap text-sm text-error'>
+									Logout
+								</span>
 							</Link>
 						</div>
-
-						<Sheet open={isOpen} onOpenChange={setIsOpen}>
-							<SheetTrigger asChild>
-								<Button variant='ghost' size='icon' className='md:hidden'>
-									<Menu className='h-6 w-6' />
-									<span className='sr-only'>Toggle menu</span>
-								</Button>
-							</SheetTrigger>
-							<SheetContent side='right' className='w-[240px] sm:w-[300px]'>
-								<SheetHeader>
-									<SheetTitle></SheetTitle>
-									<SheetDescription></SheetDescription>
-								</SheetHeader>
-								<div className='mt-4 flex flex-col gap-4'>
-									<Link href='/login' passHref>
-										<Button className='w-full justify-start'>Login</Button>
-									</Link>
-									<Link href='/register' passHref>
-										<Button className='w-full justify-start hover:accent-accent-hover'>
-											Register
-										</Button>
-									</Link>
-								</div>
-							</SheetContent>
-						</Sheet>
 					</div>
-				)}
+				</div>
 			</div>
 		</nav>
 	);

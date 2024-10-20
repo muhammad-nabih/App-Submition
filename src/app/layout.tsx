@@ -4,7 +4,7 @@ import './globals.css';
 import Navbar from '@/components/layout/Navbar/Navbar';
 import avatar from '@/public/avatar.svg';
 const inter = Inter({ subsets: ['latin'] });
-
+import { User } from '@/types/types';
 export const metadata: Metadata = {
 	title: 'app submations',
 	description:
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 	},
 };
 
-const user = {
+const user: User = {
 	name: 'Sabbir Islam',
 	role: 'UI UX Designer',
 	avatar: avatar.src,
@@ -29,7 +29,8 @@ export default function RootLayout({
 		<html lang='en'>
 			<body className={inter.className}>
 				<Navbar user={user} />
-			{children}
+
+				<main>{children}</main>
 			</body>
 		</html>
 	);
