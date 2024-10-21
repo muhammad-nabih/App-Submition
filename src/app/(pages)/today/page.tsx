@@ -1,5 +1,5 @@
-import SubmissionPreview from "@/app/(pages)/today/SubmissionPreview";
-import TodaySubmission from "@/app/(pages)/today/TodaySubmission";
+import SubmissionPreview from '@/app/(pages)/today/SubmissionPreview';
+import TodaySubmission from '@/app/(pages)/today/TodaySubmission';
 
 const Today = () => {
 	return (

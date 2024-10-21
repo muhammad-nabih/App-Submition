@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import React from 'react';
 import NotFound from '@/public/not-found.svg';
-
+import { FaArrowLeft } from 'react-icons/fa6';
+import Link from 'next/link';
 const NotFoundPage = () => {
 	return (
-		<div className='fix-height flex items-center justify-center px-2 py-3'>
-			<div className='grid place-content-center bg-white px-4'>
-				<div className='text-center'>
+		<div className='fixHeight flex items-center justify-center px-2 py-3'>
+			<div className='grid place-content-center'>
+				<div className='space-y-8 text-center'>
 					<Image
 						src={NotFound}
 						alt='Not Found '
@@ -14,13 +15,16 @@ const NotFoundPage = () => {
 						layout='responsive'
 					/>
 
-					<h1 className='mt-6 font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl'>
-						Uh-oh!
+					<h1 className='mt-12 font-bold tracking-tight text-gray-900 sm:text-2xl lg:text-4xl'>
+						404 Not Found!
 					</h1>
 
-					<p className='mt-4 text-gray-500 lg:text-3xl'>
-						We can't find that page.
-					</p>
+					<Link
+						href={'/'}
+						className='mx-auto flex w-fit items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2 text-lg text-primary-dark hover:bg-accent-hover'>
+						<FaArrowLeft />
+						Back to HomePage
+					</Link>
 				</div>
 			</div>
 		</div>

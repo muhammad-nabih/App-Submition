@@ -33,6 +33,7 @@ const config: Config = {
 				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
+					section: '#f7f8f8',
 					foreground: 'hsl(var(--muted-foreground))',
 				},
 				accent: {
@@ -45,6 +46,7 @@ const config: Config = {
 					hover: '#A8DC2A',
 					foreground: 'hsl(var(--accent-foreground))',
 				},
+
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))',

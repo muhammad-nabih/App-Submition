@@ -19,18 +19,15 @@ import ActionButton from './ActionButton';
 import { Button } from '@/components/ui/button';
 import { FaCheck } from 'react-icons/fa6';
 import { MdEdit } from 'react-icons/md';
+import { Task } from '@/types/types';
+import { useRef } from 'react';
+import SubmissionPreview from '@/app/(pages)/today/SubmissionPreview';
 
 const { randomUUID } = new ShortUniqueId({ length: 10 });
 
-interface Task {
-	id: string;
-	name: string;
-	details: string;
-	status: 'Still Needs to Work' | 'Done';
-}
-
 const Time: React.FC = () => {
 	const dispatch = useAppDispatch();
+	const [isShow, setIsShow] = useState(false);
 	const shifts = useAppSelector((state) => state.shifts.shifts);
 	const [currentShiftId, setCurrentShiftId] = useState<string | null>(null);
 	const [isEditing, setIsEditing] = useState(true);
@@ -43,11 +40,14 @@ const Time: React.FC = () => {
 	});
 
 	// Manage task state
-	const [tasks, setTasks] = useState<Task[]>([]);
+	const [tasks, setTasks] = useState<Task[]>([
+		{ id: randomUUID(), name: '', details: '', status: 'Still Needs to Work' },
+	]);
 
+	let lastShift;
 	useEffect(() => {
 		if (shifts.length > 0 && !currentShiftId) {
-			const lastShift = shifts[shifts.length - 1];
+			lastShift = shifts[shifts.length - 1];
 			setCurrentShiftId(lastShift.id);
 			setInputs({
 				startTime: lastShift.startTime,
@@ -226,7 +226,7 @@ const Time: React.FC = () => {
 				<div key={task.id} className='space-y-4'>
 					<div className='space-y-2'>
 						<h3 className='text-gray-600'>
-							Task Name {index + 1} <span className='text-error'>*</span>
+							Task {index + 1} <span className='text-error'>*</span>
 						</h3>
 						<Input
 							type='text'
@@ -239,7 +239,7 @@ const Time: React.FC = () => {
 					</div>
 					<div className='space-y-2'>
 						<h3 className='text-gray-600'>
-							Task Details <span className='text-error'>*</span>
+							Task Details {index + 1} <span className='text-error'>*</span>
 						</h3>
 						<Textarea
 							value={task.details}
@@ -296,7 +296,7 @@ const Time: React.FC = () => {
 					type='button'
 					onClick={() => setIsEditing(true)}
 					disabled={isEditing}
-					className='h-10 min-w-[120px] flex-grow items-center justify-center bg-[#00150B0D] text-lg text-primary-dark duration-200 hover:bg-primary-dark hover:text-white max-md:flex'>
+					className='h-10 min-w-[120px] flex-1 items-center justify-center bg-[#00150B0D] text-lg text-primary-dark duration-200 hover:bg-primary-dark hover:text-white max-md:flex'>
 					<MdEdit />
 					Edit
 				</Button>
@@ -305,9 +305,9 @@ const Time: React.FC = () => {
 					onClick={handleSaveShift}
 					type='button'
 					disabled={!isEditing}
-					className='h-10 min-w-[120px] flex-grow items-center justify-center bg-primary text-lg text-primary-dark duration-200 max-md:flex'>
+					className='h-10 min-w-[120px] flex-1 items-center justify-center bg-primary text-lg text-primary-dark duration-200 max-md:flex'>
 					<FaCheck />
-					Save
+					Save Shift{lastShift}
 				</Button>
 			</div>
 
@@ -319,6 +319,13 @@ const Time: React.FC = () => {
 					onClick={handleAddNewShift}
 					disabled={!isEditing}
 				/>
+				<Button
+					type='button'
+					onClick={() => setIsShow(true)}
+					className='hidden h-11 w-full self-end rounded-sm bg-primary py-3 font-semibold text-primary-foreground hover:bg-accent-hover max-md:block'>
+					Next
+				</Button>
+				<SubmissionPreview isShow={isShow} setIsShow={setIsShow} />
 			</div>
 		</form>
 	);

@@ -1,13 +1,22 @@
+import { z } from 'zod';
 
-import z from 'zod';
+export const taskSchema = z.object({
+	id: z.string(),
+	name: z.string().min(1, { message: 'Task name is required' }),
+	details: z.string().min(1, { message: 'Task details is required' }),
+	status: z.enum(['Still Needs to Work', 'Done'], {
+		required_error: 'Task status is required',
+	}),
+});
 
 export const shiftSchema = z.object({
+	id: z.string(),
 	startTime: z.string().min(1, { message: 'Start time is required' }),
 	endTime: z.string().min(1, { message: 'End time is required' }),
 	breakTime: z.string().min(1, { message: 'Break time is required' }),
-	taskName: z.string().min(1, { message: 'Task name is required' }),
-	taskDetails: z.string().min(1, { message: 'Task details is required' }),
-	taskStatus: z.string().min(1, { message: 'Task status is required' }),
+	tasks: z.array(taskSchema),
 });
 
-type shiftSchema = z.infer<typeof shiftSchema>;
+// Types
+export type Task = z.infer<typeof taskSchema>;
+export type Shift = z.infer<typeof shiftSchema>;

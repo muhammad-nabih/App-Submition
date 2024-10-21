@@ -7,3 +7,10 @@ export interface User {
 export interface SetOpenFunction {
 	(isOpen: boolean): void;
 }
+
+export interface Task {
+	id: string;
+	name: string;
+	details: string;
+	status: 'Still Needs to Work' | 'Done';
+}

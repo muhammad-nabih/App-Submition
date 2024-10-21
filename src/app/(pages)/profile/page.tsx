@@ -1,9 +1,12 @@
-import React from 'react';
+import Back from '@/app/(pages)/profile/Back';
+import ProfileSection from '@/app/(pages)/profile/ProfileSection';
 
-type Props = {};
-
-const Profile = (props: Props) => {
-	return <div>Profile</div>;
+const Profile = () => {
+	return (
+		<div>
+			<ProfileSection />
+		</div>
+	);
 };
 
 export default Profile;
