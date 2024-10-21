@@ -5,6 +5,7 @@ import Navbar from '@/components/layout/Navbar/Navbar';
 import avatar from '@/public/avatar.svg';
 const inter = Inter({ subsets: ['latin'] });
 import { User } from '@/types/types';
+import { ReduxProvider } from '@/store/reduxProvider';
 export const metadata: Metadata = {
 	title: 'app submations',
 	description:
@@ -29,8 +30,9 @@ export default function RootLayout({
 		<html lang='en'>
 			<body className={inter.className}>
 				<Navbar user={user} />
-
-				<main>{children}</main>
+				<ReduxProvider>
+					<main>{children}</main>
+				</ReduxProvider>
 			</body>
 		</html>
 	);

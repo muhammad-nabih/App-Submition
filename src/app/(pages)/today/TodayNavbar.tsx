@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns/format';
-import Shift from '@/app/(pages)/(user)/today/Shift';
-
+import Shift from '@/app/(pages)/today/Shift';
+import { IoCloseCircleOutline } from 'react-icons/io5';
 export default function TodayNavbar() {
 	return (
 		<nav className='my-4 w-full'>
@@ -17,7 +17,7 @@ export default function TodayNavbar() {
 						/>
 						<span className='text-sm text-muted-foreground sm:text-base'>
 							<b className='text-primary-dark'>Date:</b>
-							<span className='text-primary-light'>
+							<span className='text-sm text-primary-light'>
 								{format(new Date(), 'dd MMMM, yyyy (cccc)')}
 							</span>
 						</span>
@@ -26,8 +26,8 @@ export default function TodayNavbar() {
 			</section>
 
 			<section className='mt-6'>
-				<div className='h-[45px] w-full border-b border-t border-[#00150b1a] [border-bottom-style:solid] [border-top-style:solid]'>
-					<Shift />
+				<div className='min-h-[45px] w-full border-b border-t border-[#00150b1a] [border-bottom-style:solid] [border-top-style:solid]'>
+					<Shift title='Shift1' />
 				</div>
 			</section>
 		</nav>
