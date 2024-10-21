@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import {
 	Card,
 	CardContent,
@@ -11,46 +12,9 @@ import { CheckCircle2 } from 'lucide-react';
 import { useAppSelector } from '@/store/hooks';
 
 export default function SubmissionPreview() {
-	const shift = useAppSelector((state) => state.shifts.shifts);
+	const shifts = useAppSelector((state) => state.shifts.shifts);
 
-	console.log(shift);
-	const previewSub = shift.map((shift) => {
-		return (
-			<CardContent className='flex flex-col justify-between pt-4'>
-				<div className='rounded-lg bg-gray-50 p-4'>
-					<h2 className='mb-4 text-xl font-semibold'>Shift 1</h2>
-					<div className='space-y-4'>
-						<PreviewItem
-							label='Start Time'
-							value={shift.startTime}
-							filled={true}
-						/>
-						<PreviewItem
-							label='End Time'
-							value={shift.endTime}
-							filled={false}
-						/>
-						<PreviewItem
-							label='Break Time'
-							value={shift.breakTime}
-							filled={false}
-						/>
-						<PreviewItem label='Task Name' value={'taskName'} filled={false} />
-						<PreviewItem
-							label='Task Details'
-							value={shift.tasks[0].details}
-							filled={false}
-						/>
-						<PreviewItem
-							label='Task Status'
-							value={shift.tasks[0].status}
-							filled={true}
-						/>
-					</div>
-				</div>
-			</CardContent>
-		);
-	});
+
 	return (
 		<Card className='mx-auto my-8 flex flex-1 flex-col rounded-md border-none bg-card px-3 shadow-md max-md:hidden max-md:px-1 md:min-w-[400px] md:px-6 md:py-5'>
 			<CardHeader className='pb-0'>
@@ -58,7 +22,51 @@ export default function SubmissionPreview() {
 					Submission Preview
 				</CardTitle>
 			</CardHeader>
-			{previewSub}
+			{shifts.map((shift, index) => (
+				<CardContent
+					key={shift.id}
+					className='flex flex-col justify-between pt-4'>
+					<div className='rounded-lg bg-gray-50 p-4'>
+						<h2 className='mb-4 text-xl font-semibold'>Shift {index + 1}</h2>
+						<div className='space-y-4'>
+							<PreviewItem
+								label='Start Time'
+								value={shift.startTime}
+								filled={!!shift.startTime}
+							/>
+							<PreviewItem
+								label='End Time'
+								value={shift.endTime}
+								filled={!!shift.endTime}
+							/>
+							<PreviewItem
+								label='Break Time'
+								value={shift.breakTime}
+								filled={!!shift.breakTime}
+							/>
+							{shift.tasks.map((task, taskIndex) => (
+								<React.Fragment key={task.id}>
+									<PreviewItem
+										label={`Task ${taskIndex + 1} Name`}
+										value={task.name}
+										filled={!!task.name}
+									/>
+									<PreviewItem
+										label={`Task ${taskIndex + 1} Details`}
+										value={task.details}
+										filled={!!task.details}
+									/>
+									<PreviewItem
+										label={`Task ${taskIndex + 1} Status`}
+										value={task.status}
+										filled={true}
+									/>
+								</React.Fragment>
+							))}
+						</div>
+					</div>
+				</CardContent>
+			))}
 			<CardFooter className='flex h-full py-0'>
 				<Button
 					// onClick={'handleSubmit'}
@@ -82,7 +90,7 @@ function PreviewItem({
 	return (
 		<div className='flex items-center'>
 			<CheckCircle2
-				className={`mr-3 h-5 w-5 ${filled ? 'text-primary' : 'text-gray-300'}`}
+				className={`mr-3 h-5 min-w-5 ${filled ? 'text-primary' : 'text-gray-300'}`}
 			/>
 			<div>
 				<p className='text-sm text-gray-500'>{label}</p>

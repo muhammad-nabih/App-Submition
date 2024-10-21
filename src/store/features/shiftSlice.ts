@@ -85,6 +85,16 @@ const shiftsSlice = createSlice({
 				task.details = payload.taskDetails;
 			}
 		},
+		addTask: (
+			state,
+			action: PayloadAction<{ shiftId: string; task: Task }>,
+		) => {
+			const { shiftId, task } = action.payload;
+			const shift = state.shifts.find((shift) => shift.id === shiftId);
+			if (shift) {
+				shift.tasks.push(task);
+			}
+		},
 		updateTaskStatus: (
 			state,
 			{
@@ -105,6 +115,7 @@ const shiftsSlice = createSlice({
 });
 
 export const {
+	addTask,
 	addShift,
 	updateShiftStartTime,
 	updateShiftEndTime,

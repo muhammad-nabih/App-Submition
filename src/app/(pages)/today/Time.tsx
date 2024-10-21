@@ -1,31 +1,39 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import ShortUniqueId from 'short-unique-id';
 import {
+	addShift,
 	updateShiftStartTime,
 	updateShiftEndTime,
 	updateShiftBreakTime,
 	updateTaskName,
 	updateTaskDetails,
 	updateTaskStatus,
+	addTask,
 } from '@/store/features/shiftSlice';
-import TaskForm from './TaskForm';
+// import { v4 as uuidv4 } from 'uuid';
 import ActionButton from './ActionButton';
 import { Button } from '@/components/ui/button';
 import { FaCheck } from 'react-icons/fa6';
 import { MdEdit } from 'react-icons/md';
 
+const { randomUUID } = new ShortUniqueId({ length: 10 });
+
 interface Task {
-	taskName: string;
-	taskDetails: string;
-	taskStatus: 'Still Needs to Work' | 'Done';
+	id: string;
+	name: string;
+	details: string;
+	status: 'Still Needs to Work' | 'Done';
 }
 
 const Time: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const shifts = useAppSelector((state) => state.shifts.shifts);
+	const [currentShiftId, setCurrentShiftId] = useState<string | null>(null);
+	const [isEditing, setIsEditing] = useState(true);
 
 	// Manage time inputs state
 	const [inputs, setInputs] = useState({
@@ -35,62 +43,137 @@ const Time: React.FC = () => {
 	});
 
 	// Manage task state
-	const [task, setTask] = useState<Task>({
-		taskName: '',
-		taskDetails: '',
-		taskStatus: 'Done',
-	});
+	const [tasks, setTasks] = useState<Task[]>([]);
+
+	useEffect(() => {
+		if (shifts.length > 0 && !currentShiftId) {
+			const lastShift = shifts[shifts.length - 1];
+			setCurrentShiftId(lastShift.id);
+			setInputs({
+				startTime: lastShift.startTime,
+				endTime: lastShift.endTime,
+				breakTime: lastShift.breakTime,
+			});
+			setTasks(lastShift.tasks);
+			setIsEditing(false);
+		}
+	}, [shifts, currentShiftId]);
 
 	const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const newStartTime = e.target.value;
 		setInputs((prev) => ({ ...prev, startTime: newStartTime }));
-		dispatch(updateShiftStartTime(newStartTime));
+		if (currentShiftId) {
+			dispatch(
+				updateShiftStartTime({ id: currentShiftId, startTime: newStartTime }),
+			);
+		}
 	};
 
 	const handleEndTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const newEndTime = e.target.value;
 		setInputs((prev) => ({ ...prev, endTime: newEndTime }));
-		dispatch(updateShiftEndTime(newEndTime));
+		if (currentShiftId) {
+			dispatch(updateShiftEndTime({ id: currentShiftId, endTime: newEndTime }));
+		}
 	};
 
 	const handleBreakTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const newBreakTime = e.target.value;
 		setInputs((prev) => ({ ...prev, breakTime: newBreakTime }));
-		dispatch(updateShiftBreakTime(newBreakTime));
+		if (currentShiftId) {
+			dispatch(
+				updateShiftBreakTime({ id: currentShiftId, breakTime: newBreakTime }),
+			);
+		}
 	};
 
-	const handleTaskNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const newTaskName = e.target.value;
-		setTask((prev) => ({ ...prev, taskName: newTaskName }));
-		dispatch(updateTaskName(newTaskName));
+	const handleTaskNameChange = (taskId: string, newName: string) => {
+		setTasks(
+			tasks.map((task) =>
+				task.id === taskId ? { ...task, name: newName } : task,
+			),
+		);
+		if (currentShiftId) {
+			dispatch(
+				updateTaskName({ shiftId: currentShiftId, taskId, taskName: newName }),
+			);
+		}
 	};
 
-	const handleTaskDetailsChange = (
-		e: React.ChangeEvent<HTMLTextAreaElement>,
+	const handleTaskDetailsChange = (taskId: string, newDetails: string) => {
+		setTasks(
+			tasks.map((task) =>
+				task.id === taskId ? { ...task, details: newDetails } : task,
+			),
+		);
+		if (currentShiftId) {
+			dispatch(
+				updateTaskDetails({
+					shiftId: currentShiftId,
+					taskId,
+					taskDetails: newDetails,
+				}),
+			);
+		}
+	};
+
+	const handleTaskStatusChange = (
+		taskId: string,
+		newStatus: 'Still Needs to Work' | 'Done',
 	) => {
-		const newTaskDetails = e.target.value;
-		setTask((prev) => ({ ...prev, taskDetails: newTaskDetails }));
-		dispatch(updateTaskDetails(newTaskDetails));
-	};
-
-	const handleTaskStatusChange = (status: 'Still Needs to Work' | 'Done') => {
-		setTask((prev) => ({ ...prev, taskStatus: status }));
-		dispatch(updateTaskStatus(status));
+		setTasks(
+			tasks.map((task) =>
+				task.id === taskId ? { ...task, status: newStatus } : task,
+			),
+		);
+		if (currentShiftId) {
+			dispatch(
+				updateTaskStatus({
+					shiftId: currentShiftId,
+					taskId,
+					taskStatus: newStatus,
+				}),
+			);
+		}
 	};
 
 	const handleSaveShift = () => {
-		// Implement save shift logic here
-		console.log('Saving shift...');
+		if (currentShiftId) {
+			setIsEditing(false);
+		} else {
+			const newShiftId = randomUUID();
+			dispatch(
+				addShift({
+					id: newShiftId,
+					startTime: inputs.startTime,
+					endTime: inputs.endTime,
+					breakTime: inputs.breakTime,
+					tasks: tasks,
+				}),
+			);
+			setCurrentShiftId(newShiftId);
+			setIsEditing(false);
+		}
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		// Handle form submission here
-		console.log('Form submitted');
+	const handleAddNewTask = () => {
+		const newTask: Task = {
+			id: randomUUID(),
+			name: '',
+			details: '',
+			status: 'Still Needs to Work',
+		};
+		setTasks([...tasks, newTask]);
+		if (currentShiftId) {
+			dispatch(addTask({ shiftId: currentShiftId, task: newTask }));
+		}
 	};
 
+	const handleAddNewShift = () => {};
+
+	const handleCancelShift = () => {};
 	return (
-		<form onSubmit={handleSubmit} className='min-w-[320px] space-y-4'>
+		<form className='min-w-[320px] space-y-4'>
 			<div>
 				<h2 className='mb-4 text-xl font-bold'>Time</h2>
 				<section className='flex w-full gap-4'>
@@ -104,6 +187,7 @@ const Time: React.FC = () => {
 							value={inputs.startTime}
 							onChange={handleStartTimeChange}
 							required
+							disabled={!isEditing}
 							className='w-full rounded border border-primary-muted p-2 text-primary-dark'
 						/>
 					</div>
@@ -117,6 +201,7 @@ const Time: React.FC = () => {
 							value={inputs.endTime}
 							onChange={handleEndTimeChange}
 							required
+							disabled={!isEditing}
 							className='w-full rounded border border-primary-muted p-2 text-primary-dark'
 						/>
 					</div>
@@ -131,70 +216,86 @@ const Time: React.FC = () => {
 						value={inputs.breakTime}
 						onChange={handleBreakTimeChange}
 						required
+						disabled={!isEditing}
 						className='w-full rounded border border-primary-muted p-2 text-primary-dark'
 					/>
 				</div>
 			</div>
 
-			<div className='space-y-4'>
-				<div className='space-y-2'>
-					<h3 className='text-gray-600'>
-						Task Name <span className='text-error'>*</span>
-					</h3>
-					<Input
-						type='text'
-						value={task.taskName}
-						onChange={handleTaskNameChange}
-						required
-						className='border-text-primary-light w-full rounded border p-2 text-primary-dark placeholder:text-primary-light'
-					/>
-				</div>
-				<div className='space-y-2'>
-					<h3 className='text-gray-600'>
-						Task Details <span className='text-error'>*</span>
-					</h3>
-					<Textarea
-						value={task.taskDetails}
-						onChange={handleTaskDetailsChange}
-						className='border-text-primary-light h-24 w-full resize-none rounded border p-2 text-primary-dark placeholder:text-primary-muted'
-					/>
-				</div>
-				<div className='space-y-2'>
-					<h3 className='text-gray-600'>
-						Task Status <span className='text-error'>*</span>
-					</h3>
-					<div className='flex gap-4'>
-						<Button
-							type='button'
-							onClick={() => handleTaskStatusChange('Still Needs to Work')}
-							className={`rounded shadow-none ${
-								task.taskStatus === 'Still Needs to Work'
-									? 'bg-gray-200 shadow-sm'
-									: 'bg-white'
-							}`}>
-							Still Needs to Work
-						</Button>
-						<Button
-							type='button'
-							onClick={() => handleTaskStatusChange('Done')}
-							className={`rounded shadow-none ${
-								task.taskStatus === 'Done'
-									? 'bg-gray-200 shadow-sm'
-									: 'bg-transparent'
-							}`}>
-							Done
-						</Button>
+			{tasks.map((task, index) => (
+				<div key={task.id} className='space-y-4'>
+					<div className='space-y-2'>
+						<h3 className='text-gray-600'>
+							Task Name {index + 1} <span className='text-error'>*</span>
+						</h3>
+						<Input
+							type='text'
+							value={task.name}
+							onChange={(e) => handleTaskNameChange(task.id, e.target.value)}
+							required
+							disabled={!isEditing}
+							className='border-text-primary-light w-full rounded border p-2 text-primary-dark placeholder:text-primary-light'
+						/>
+					</div>
+					<div className='space-y-2'>
+						<h3 className='text-gray-600'>
+							Task Details <span className='text-error'>*</span>
+						</h3>
+						<Textarea
+							value={task.details}
+							onChange={(e) => handleTaskDetailsChange(task.id, e.target.value)}
+							disabled={!isEditing}
+							className='border-text-primary-light h-24 w-full resize-none rounded border p-2 text-primary-dark placeholder:text-primary-muted'
+						/>
+					</div>
+					<div className='space-y-2'>
+						<h3 className='text-gray-600'>
+							Task Status <span className='text-error'>*</span>
+						</h3>
+						<div className='flex gap-4'>
+							<Button
+								type='button'
+								onClick={() =>
+									handleTaskStatusChange(task.id, 'Still Needs to Work')
+								}
+								disabled={!isEditing}
+								className={`rounded shadow-none ${
+									task.status === 'Still Needs to Work'
+										? 'bg-gray-200 shadow-sm'
+										: 'bg-white'
+								}`}>
+								Still Needs to Work
+							</Button>
+							<Button
+								type='button'
+								onClick={() => handleTaskStatusChange(task.id, 'Done')}
+								disabled={!isEditing}
+								className={`rounded shadow-none ${
+									task.status === 'Done'
+										? 'bg-gray-200 shadow-sm'
+										: 'bg-transparent'
+								}`}>
+								Done
+							</Button>
+						</div>
 					</div>
 				</div>
-			</div>
+			))}
 
 			<div className='flex items-center justify-end gap-4 py-2'>
-				<ActionButton text='Add New Task' variant='rounded' />
+				<ActionButton
+					text='Add New Task'
+					variant='rounded'
+					onClick={handleAddNewTask}
+					disabled={!isEditing}
+				/>
 			</div>
 
 			<div className='flex items-center justify-end gap-4 py-2'>
 				<Button
 					type='button'
+					onClick={() => setIsEditing(true)}
+					disabled={isEditing}
 					className='h-10 min-w-[120px] flex-grow items-center justify-center bg-[#00150B0D] text-lg text-primary-dark duration-200 hover:bg-primary-dark hover:text-white max-md:flex'>
 					<MdEdit />
 					Edit
@@ -203,10 +304,21 @@ const Time: React.FC = () => {
 				<Button
 					onClick={handleSaveShift}
 					type='button'
+					disabled={!isEditing}
 					className='h-10 min-w-[120px] flex-grow items-center justify-center bg-primary text-lg text-primary-dark duration-200 max-md:flex'>
 					<FaCheck />
 					Save
 				</Button>
+			</div>
+
+			<div className='flex items-center justify-end gap-4 py-2'>
+				<ActionButton
+					text='Add Another Shift'
+					variant='square'
+					fullWidth={true}
+					onClick={handleAddNewShift}
+					disabled={!isEditing}
+				/>
 			</div>
 		</form>
 	);

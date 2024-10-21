@@ -4,6 +4,7 @@ import { format } from 'date-fns/format';
 import Shift from '@/app/(pages)/today/Shift';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 export default function TodayNavbar() {
+    
 	return (
 		<nav className='my-4 w-full'>
 			<section className='w-full'>
