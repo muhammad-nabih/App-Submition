@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns/format';
 import Shift from '@/app/(pages)/today/Shift';

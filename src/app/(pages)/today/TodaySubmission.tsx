@@ -1,6 +1,4 @@
-import { Card } from '@/components/ui/card';
 import React from 'react';
-import { CalendarIcon } from '@radix-ui/react-icons';
 import TodayNavbar from '@/app/(pages)/today/TodayNavbar';
 import Time from '@/app/(pages)/today/Time';
 

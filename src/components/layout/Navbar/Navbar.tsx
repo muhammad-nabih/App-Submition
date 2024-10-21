@@ -10,7 +10,7 @@ import UserDetails from '@/components/layout/Navbar/UserDetails';
 import Image from 'next/image';
 import logout from '@/public/icons/logout.svg';
 import Link from 'next/link';
-import Logout from '@/components/layout/Navbar/Logout';
+
 
 interface NavbarProps {
 	user?: User;

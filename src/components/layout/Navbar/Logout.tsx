@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import logout from '@/public/icons/logout.svg';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+
 import { cn } from '@/lib/utils/utils';
 import Link from 'next/link';
 

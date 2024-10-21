@@ -12,16 +12,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
+import { usePreviewContext } from '@/contexts/previewContext';
 
-export default function SubmissionPreview({
-	isShow,
-	setIsShow,
-}: {
-	isShow: boolean;
-	setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function SubmissionPreview() {
 	const shifts = useAppSelector((state) => state.shifts.shifts);
-
+	const { isShow, setIsShow } = usePreviewContext();
 	if (isShow) {
 		return (
 			<div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 md:hidden'>

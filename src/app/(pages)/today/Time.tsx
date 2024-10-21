@@ -20,14 +20,14 @@ import { Button } from '@/components/ui/button';
 import { FaCheck } from 'react-icons/fa6';
 import { MdEdit } from 'react-icons/md';
 import { Task } from '@/types/types';
-import { useRef } from 'react';
 import SubmissionPreview from '@/app/(pages)/today/SubmissionPreview';
+import { usePreviewContext } from '@/contexts/previewContext';
 
 const { randomUUID } = new ShortUniqueId({ length: 10 });
 
 const Time: React.FC = () => {
 	const dispatch = useAppDispatch();
-	const [isShow, setIsShow] = useState(false);
+	const { setIsShow } = usePreviewContext();
 	const shifts = useAppSelector((state) => state.shifts.shifts);
 	const [currentShiftId, setCurrentShiftId] = useState<string | null>(null);
 	const [isEditing, setIsEditing] = useState(true);
@@ -325,7 +325,7 @@ const Time: React.FC = () => {
 					className='hidden h-11 w-full self-end rounded-sm bg-primary py-3 font-semibold text-primary-foreground hover:bg-accent-hover max-md:block'>
 					Next
 				</Button>
-				<SubmissionPreview isShow={isShow} setIsShow={setIsShow} />
+				<SubmissionPreview />
 			</div>
 		</form>
 	);

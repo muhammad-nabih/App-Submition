@@ -4,7 +4,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import column from '@/public/icons/column.svg';
-import logout from '@/public/icons/logout.svg';
 import Link from 'next/link';
 import { User } from '@/types/types';
 
@@ -17,7 +16,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
 		<div className='flex items-center justify-end gap-2 py-3'>
 			<Link href='/profile' className='group relative'>
 				<motion.div
-					className='flex items-center gap-4 rounded-lg border-2 border-transparent bg-transparent p-2  transition-all duration-300 ease-in-out hover:border-green-400 hover:shadow-green-200/50'
+					className='flex items-center gap-4 rounded-lg border-2 border-transparent bg-transparent p-2 transition-all duration-300 ease-in-out hover:border-green-400 hover:shadow-green-200/50'
 					whileHover={{ scale: 1.05 }}
 					transition={{ type: 'spring', stiffness: 400, damping: 10 }}>
 					<motion.div

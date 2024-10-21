@@ -7,8 +7,8 @@ const Back = () => {
 	const router = useRouter();
 	return (
 		<Button
-        variant={'ghost'}
-			className='duration-200 hover:scale-105 hover:bg-transparent hover:text-black capitalize'
+			variant={'ghost'}
+			className='capitalize duration-200 hover:scale-105 hover:bg-transparent hover:text-black'
 			onClick={() => router.back()}>
 			<FaArrowLeftLong />
 			back

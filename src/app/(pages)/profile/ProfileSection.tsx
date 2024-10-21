@@ -38,13 +38,13 @@ export default function ProfileSection() {
 								</div>
 								<div className='w-full space-y-2'>
 									<Button
-										className='bg-muted-section w-full justify-center border-primary-light'
+										className='w-full justify-center border-primary-light bg-muted-section'
 										variant='outline'>
 										<Edit className='h-4 w-4' />
 										Edit Details
 									</Button>
 									<Button
-										className='bg-muted-section w-full justify-center border-primary-light'
+										className='w-full justify-center border-primary-light bg-muted-section'
 										variant='outline'>
 										<Lock className='h-4 w-4' />
 										Edit Password
@@ -53,9 +53,9 @@ export default function ProfileSection() {
 							</Card>
 
 							<div className='mb-3 space-y-6'>
-								<section className='bg-muted-section rounded-md px-2 py-3'>
+								<section className='rounded-md bg-muted-section px-2 py-3'>
 									<InfoSection title='Personal Information'>
-										<div className='bg-muted-section grid gap-4 rounded-md px-2 py-3 sm:grid-cols-3'>
+										<div className='grid gap-4 rounded-md bg-muted-section px-2 py-3 sm:grid-cols-3'>
 											<InfoItem label='First Name' value='Sabbir' />
 											<InfoItem label='Last Name' value='Islam' />
 											<InfoItem label='Username' value='sabbir220' />
@@ -72,9 +72,9 @@ export default function ProfileSection() {
 									</InfoSection>
 								</section>
 
-								<section className='bg-muted-section rounded-md px-2 py-3'>
+								<section className='rounded-md bg-muted-section px-2 py-3'>
 									<InfoSection title='Educational Information'>
-										<div className='bg-muted-section grid gap-4 rounded-md px-2 py-3 sm:grid-cols-2'>
+										<div className='grid gap-4 rounded-md bg-muted-section px-2 py-3 sm:grid-cols-2'>
 											<InfoItem
 												label='Educational Qualification'
 												value="Bachelor's Degree"
@@ -83,9 +83,9 @@ export default function ProfileSection() {
 										</div>
 									</InfoSection>
 								</section>
-								<section className='bg-muted-section rounded-md px-2 py-3'>
+								<section className='rounded-md bg-muted-section px-2 py-3'>
 									<InfoSection title='Employment Information'>
-										<div className='bg-muted-section grid gap-4 rounded-md px-2 py-3 sm:grid-cols-2 lg:grid-cols-3'>
+										<div className='grid gap-4 rounded-md bg-muted-section px-2 py-3 sm:grid-cols-2 lg:grid-cols-3'>
 											<InfoItem label='Employment Type' value='Full Time' />
 											<InfoItem label='Hiring Date' value='01 June, 2023.' />
 											<InfoItem label='Department' value='Content Creation' />
@@ -99,7 +99,7 @@ export default function ProfileSection() {
 									</InfoSection>
 								</section>
 
-								<section className='bg-muted-section rounded-md px-2 py-3'>
+								<section className='rounded-md bg-muted-section px-2 py-3'>
 									<InfoSection title='Contact Information'>
 										<div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
 											<InfoItem label='Phone Number' value='0102020260' />

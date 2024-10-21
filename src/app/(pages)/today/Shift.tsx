@@ -1,5 +1,4 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { useAppSelector } from '@/store/hooks';
 import React from 'react';
 import { IoCloseCircleOutline } from 'react-icons/io5';
