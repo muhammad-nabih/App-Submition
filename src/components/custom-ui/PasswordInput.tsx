@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
 interface PasswordInputProps {
-	register: any;
+	register: UseFormRegisterReturn;
 	error?: string;
 }
 

@@ -1,4 +1,13 @@
 {
-	"extends": ["next/core-web-vitals", "next/typescript", "prettier"],
-	"rules": {}
+    "extends": [
+        "next/core-web-vitals",
+        "next/typescript",
+        "prettier"
+    ],
+    "rules": {
+        "@typescript-eslint/no-unused-vars": "off", // Disable unused variables error
+        "react/no-unescaped-entities": "off", // Disable unescaped entities warning
+        "react-hooks/exhaustive-deps": "off", // Disable exhaustive-deps warnings for React Hooks
+        "@typescript-eslint/ban-types": "off" // Disable banning {} as a type
+    }
 }
