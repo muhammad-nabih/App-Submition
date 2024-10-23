@@ -1,49 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with
-[`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Application
 
-## Getting Started
+A modern Next.js 14 application with TypeScript, Redux Toolkit, and Tailwind CSS.
 
-First, run the development server:
+## 🚀 Features
 
+- Built with Next.js 14 and React 18
+- TypeScript for type safety
+- State management with Redux Toolkit
+- Styled using Tailwind CSS with animations
+- Form handling with React Hook Form and Zod validation
+- UI components from Radix UI
+- Motion animations with Framer Motion
+- Toast notifications with React Toastify
+- Responsive design
+- ESLint and Prettier for code consistency
+
+## 📋 Prerequisites
+
+Before you begin, ensure you have the following installed:
+- Node.js (version 16 or higher)
+- npm or yarn package manager
+
+## 🛠️ Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd task
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Create a `.env` file based on `.env.example` (if applicable)
+
+## 🚀 Usage
+
+### Development
+To start the development server:
 ```bash
 npm run dev
 # or
 yarn dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Build
+To create a production build:
+```bash
+npm run build
 # or
-pnpm dev
-# or
-bun dev
+yarn build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the
-result.
+### Production
+To start the production server:
+```bash
+npm run start
+# or
+yarn start
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page
-auto-updates as you edit the file.
+### Linting and Formatting
+```bash
+# Run ESLint
+npm run lint
 
-This project uses
-[`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)
-to automatically optimize and load [Geist](https://vercel.com/font), a new font
-family for Vercel.
+# Check lint issues without fixing
+npm run checkLint
 
-## Learn More
+# Fix lint issues
+npm run lint-fix
 
-To learn more about Next.js, take a look at the following resources:
+# Format code with Prettier
+npm run format
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🏗️ Project Structure
 
-You can check out
-[the Next.js GitHub repository](https://github.com/vercel/next.js) - your
-feedback and contributions are welcome!
+```
+src/
+├── app/              # App router pages and layouts
+├── components/       # Reusable React components
+├── contexts/        # React context providers
+├── hooks/           # Custom React hooks
+├── lib/             # Utility functions and configurations
+├── public/          # Static assets
+├── schemas/         # Zod validation schemas
+├── store/           # Redux store configuration
+└── types/           # TypeScript type definitions
+```
 
-## Deploy on Vercel
+## 🧰 Tech Stack
 
-The easiest way to deploy your Next.js app is to use the
-[Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
+- **Framework:** Next.js 14
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **State Management:** Redux Toolkit
+- **Forms:** React Hook Form
+- **Validation:** Zod
+- **UI Components:** Radix UI
+- **Icons:** Lucide React
+- **Animations:** Framer Motion
+- **Date Handling:** date-fns
+- **Notifications:** React Toastify
 
-Check out our
-[Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying)
-for more details.
+## 🧪 Development Tools
+
+- ESLint for code linting
+- Prettier for code formatting
+- TypeScript for static type checking
+- PostCSS for CSS processing
+- Tailwind CSS for utility-first styling
+
+## 📝 Version
+
+Current version: 0.1.0
+
+## 📄 License
+
+This project is private and not licensed for public use.
