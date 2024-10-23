@@ -5,6 +5,8 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 interface PreviewContextType {
 	isShow: boolean;
 	setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
+	isSaved: boolean;
+	setIsSaved: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // Provide a default value for the context (optional, could also be `null`)
@@ -24,9 +26,10 @@ interface PreviewProviderProps {
 
 const PreviewProvider = ({ children }: PreviewProviderProps) => {
 	const [isShow, setIsShow] = useState(false);
+	const [isSaved, setIsSaved] = useState(false);
 
 	// Pass isShow and setIsShow as the context value
-	const value = { isShow, setIsShow };
+	const value = { isShow, setIsShow ,isSaved, setIsSaved};
 
 	return (
 		<PreviewContext.Provider value={value}>{children}</PreviewContext.Provider>

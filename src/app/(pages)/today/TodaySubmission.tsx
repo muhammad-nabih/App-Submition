@@ -4,7 +4,7 @@ import Time from '@/app/(pages)/today/Time';
 
 const TodaySubmission = () => {
 	return (
-		<div className='container mx-auto my-8 rounded-md bg-card px-2 py-2 shadow-md md:px-6 md:py-5'>
+		<div className='container mx-auto my-6 h-[80vh] overflow-y-auto rounded-md bg-card px-6 py-0 shadow-sm'>
 			<TodayNavbar />
 			<Time />
 		</div>

@@ -13,16 +13,16 @@ interface UserDetailsProps {
 
 const UserDetails = ({ user }: UserDetailsProps) => {
 	return (
-		<div className='flex items-center justify-end gap-2 py-3'>
+		<div className='flex items-center justify-end gap-2 py-1'>
 			<Link href='/profile' className='group relative'>
 				<motion.div
-					className='flex items-center gap-4 rounded-lg border-2 border-transparent bg-transparent p-2 transition-all duration-300 ease-in-out hover:border-green-400 hover:shadow-green-200/50'
+					className='flex items-center gap-4 rounded-lg border-2 border-transparent bg-transparent p-2 transition-all duration-300 ease-in-out hover:shadow-green-200/50'
 					whileHover={{ scale: 1.05 }}
 					transition={{ type: 'spring', stiffness: 400, damping: 10 }}>
 					<motion.div
 						whileHover={{ rotate: 360 }}
 						transition={{ duration: 0.5 }}>
-						<Avatar className='h-12 w-12 ring-2 ring-green-200 ring-offset-2 transition-all duration-300 group-hover:ring-green-400'>
+						<Avatar className='h-[38px] w-[38px] ring-2 ring-green-200 ring-offset-2 transition-all duration-300 group-hover:ring-green-400'>
 							<AvatarImage src={user.avatar} />
 							<AvatarFallback className='bg-green-100 text-lg font-semibold text-green-700'>
 								{user.name.charAt(0).toUpperCase()}

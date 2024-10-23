@@ -16,17 +16,17 @@ export default function ProfileSection() {
 		avatar: avatar.src,
 	};
 	return (
-		<div className='space-y-8 p-4'>
+		<div className='space-y-4 p-4'>
 			<Back />
 			<div className='min-h-screen bg-gray-100'>
 				<Card className='mx-auto overflow-hidden border-none'>
 					<CardContent className='p-2'>
-						<div className='bg-white p-6'>
+						<div className='bg-white p-4'>
 							<h1 className='text-2xl font-bold'>My Profile</h1>
 						</div>
 						<Divider />
 
-						<div className='my-8 grid gap-8 md:grid-cols-[300px,1fr]'>
+						<div className='my-4 grid gap-8 md:grid-cols-[300px,1fr]'>
 							<Card className='flex h-auto flex-col items-center gap-6 border-none p-6'>
 								<Avatar className='h-32 w-32 border-4 border-purple-600'>
 									<AvatarImage alt='Sabbir Islam' src={user.avatar} />

@@ -14,3 +14,11 @@ export interface Task {
 	details: string;
 	status: 'Still Needs to Work' | 'Done';
 }
+
+export interface ActionButtonProps {
+	text: string;
+	fullWidth?: boolean;
+	variant?: 'rounded' | 'square';
+	disabled?: boolean;
+	onClick?: () => void;
+}

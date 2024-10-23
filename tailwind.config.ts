@@ -33,6 +33,7 @@ const config: Config = {
 				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
+                    
 					section: '#f7f8f8',
 					foreground: 'hsl(var(--muted-foreground))',
 				},
@@ -55,6 +56,7 @@ const config: Config = {
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
 				error: '#BB1212',
+				notification: '#D53838',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

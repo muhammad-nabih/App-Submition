@@ -13,24 +13,29 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { usePreviewContext } from '@/contexts/previewContext';
+import { PreviewItem } from '@/lib/helpers/helpers';
 
 export default function SubmissionPreview() {
 	const shifts = useAppSelector((state) => state.shifts.shifts);
-	const { isShow, setIsShow } = usePreviewContext();
+	const { isShow, setIsShow, isSaved } = usePreviewContext();
 	if (isShow) {
 		return (
 			<div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 md:hidden'>
 				<Card className='w-full max-w-md border-none'>
-					<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-						<CardTitle className='text-2xl font-bold'>
+					<CardHeader className='space-y-0'>
+						<CardTitle className='relative flex w-full items-center justify-between text-2xl font-bold'>
 							Submission Preview
+							<div className='flex items-center justify-center rounded-full bg-notification px-[6px] py-1 text-xs font-normal text-white'>
+								-2 Hours $
+							</div>
+							<Button
+								variant='ghost'
+								size='icon'
+								className='absolute -right-10 -top-10 rounded-full bg-white'
+								onClick={() => setIsShow(false)}>
+								<X className='h-4 w-4' />
+							</Button>
 						</CardTitle>
-						<Button
-							variant='ghost'
-							size='icon'
-							onClick={() => setIsShow(false)}>
-							<X className='h-4 w-4' />
-						</Button>
 					</CardHeader>
 					<CardContent className='max-h-[70vh] space-y-4 overflow-y-auto'>
 						{shifts.map((shift, index) => (
@@ -73,7 +78,7 @@ export default function SubmissionPreview() {
 							</div>
 						))}
 					</CardContent>
-					<CardFooter>
+					<CardFooter className='py-5 bg-white'>
 						<Button
 							onClick={() => {
 								// Handle submission logic here
@@ -90,26 +95,23 @@ export default function SubmissionPreview() {
 
 	return (
 		<Card
-			className={`mx-auto my-8 flex flex-1 flex-col rounded-md border-none bg-card px-3 shadow-md max-md:hidden max-md:px-1 md:min-w-[400px] md:px-6 md:py-5`}
-			style={{
-				position: 'absolute',
-				top: '50%',
-				left: '50%',
-				transform: 'translate(-50%, -50%)',
-				display: isShow ? 'flex' : 'none',
-			}}>
-			<CardHeader className='pb-0'>
-				<CardTitle className='border-b border-[#00150B1A] py-3 text-2xl font-bold'>
-					Submission Preview
+			className={`mx-auto my-6 flex w-[448px] flex-1 flex-col rounded-md border-none bg-card px-3 shadow-sm max-md:hidden max-md:px-1 md:min-w-[400px] ${isSaved ? 'flex' : 'hidden'} max-h-[80vh] overflow-auto`}>
+			<CardHeader className='sticky top-0 my-0 w-full bg-white p-0 px-0 pb-0'>
+				<CardTitle className='flex justify-between border-b border-[#00150B1A] px-2 py-6 text-xl font-bold'>
+					<span>Submission Preview</span>
+					<div className='flex items-center justify-center rounded-full bg-notification px-[6px] py-1 text-xs font-normal text-white'>
+						-2 Hours $
+					</div>
 				</CardTitle>
 			</CardHeader>
+
 			{shifts.map((shift, index) => (
 				<CardContent
 					key={shift.id}
-					className='flex flex-col justify-between pt-4'>
-					<div className='rounded-lg bg-gray-50 p-4'>
-						<h2 className='mb-4 text-xl font-semibold'>Shift {index + 1}</h2>
-						<div className='space-y-4'>
+					className='my-2 flex flex-col justify-between rounded-lg bg-muted-section pt-4'>
+					<div className='rounded-lg px-2 py-3'>
+						<h2 className='mb-4 text-xl font-bold'>Shift {index + 1}</h2>
+						<div className='space-y-1 overflow-x-hidden'>
 							<PreviewItem
 								label='Start Time'
 								value={shift.startTime}
@@ -148,7 +150,7 @@ export default function SubmissionPreview() {
 					</div>
 				</CardContent>
 			))}
-			<CardFooter className='flex h-full py-0'>
+			<CardFooter className='sticky bottom-0 z-10 flex h-full w-full bg-white py-5'>
 				<Button
 					// onClick={'handleSubmit'}
 					className='mt-4 h-11 w-full self-end rounded-lg bg-primary py-3 font-semibold text-primary-foreground hover:bg-accent-hover'>
@@ -156,27 +158,5 @@ export default function SubmissionPreview() {
 				</Button>
 			</CardFooter>
 		</Card>
-	);
-}
-
-function PreviewItem({
-	label,
-	value,
-	filled,
-}: {
-	label: string;
-	value: string;
-	filled: boolean;
-}) {
-	return (
-		<div className='flex items-center'>
-			<CheckCircle2
-				className={`mr-3 h-5 min-w-5 ${filled ? 'text-primary' : 'text-gray-300'}`}
-			/>
-			<div>
-				<p className='text-sm text-gray-500'>{label}</p>
-				<p className='font-medium'>{value || '-'}</p>
-			</div>
-		</div>
 	);
 }

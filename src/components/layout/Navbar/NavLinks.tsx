@@ -7,12 +7,20 @@ import { HiOutlineArrowUpOnSquare } from 'react-icons/hi2';
 
 const navLinks = [
 	{
+		href: '/late-submission',
+		text: 'Late Submission',
+		icon: <HiOutlineArrowUpOnSquare />,
+		activeClasses: 'bg-primary-dark text-white',
+		inactiveClasses: 'bg-transparent text-primary-dark',
+	},
+	{
 		href: '/today',
 		text: "Today's Submission",
 		icon: <HiOutlineArrowUpOnSquare />,
 		activeClasses: 'bg-primary-dark text-white',
 		inactiveClasses: 'bg-transparent text-primary-dark',
 	},
+
 	{
 		href: '/history',
 		text: 'History',
@@ -46,7 +54,7 @@ export default function NavLinks({ setOpen }: NavLinksProps) {
 						onClick={() => setOpen(false)}
 						className={`${baseClasses} ${
 							isActive ? activeClasses : inactiveClasses
-						} group relative overflow-hidden`}>
+						} group relative ${link.text != 'Late Submission' ? 'overflow-hidden' : ''} `}>
 						<span className='relative z-10 transition-transform duration-150 group-hover:scale-110'>
 							{link.icon}
 						</span>
@@ -55,6 +63,11 @@ export default function NavLinks({ setOpen }: NavLinksProps) {
 						</span>
 						<span className='absolute inset-0 z-0 bg-primary-dark/5 opacity-0 transition-opacity duration-150 group-hover:opacity-100' />
 						<span className='absolute bottom-0 left-0 h-0.5 w-0 bg-primary-dark transition-all duration-150 group-hover:w-full' />
+
+						{/* dddddddddddd */}
+						<span
+							className={`absolute ${link.text != 'Late Submission' ? 'hidden' : ''} -right-1 -top-1 h-4 w-4 -translate-y-1 rounded-full border-4 border-white bg-notification`}
+						/>
 					</Link>
 				);
 			})}

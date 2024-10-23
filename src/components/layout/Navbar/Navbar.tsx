@@ -11,7 +11,6 @@ import Image from 'next/image';
 import logout from '@/public/icons/logout.svg';
 import Link from 'next/link';
 
-
 interface NavbarProps {
 	user?: User;
 }
@@ -22,8 +21,8 @@ export default function Component({ user }: NavbarProps = {}) {
 	const toggleMenu = () => setIsOpen(!isOpen);
 
 	return (
-		<nav className='relative flex max-h-24 items-center px-3 py-2 shadow-sm max-sm:px-1 max-sm:py-1 md:px-2 md:py-5'>
-			<div className='flex w-full items-center justify-between px-2 py-3 md:px-6'>
+		<nav className='relative flex max-h-[70px] items-center bg-white px-6 py-4 shadow-sm'>
+			<div className='flex w-full items-center justify-between  h-[48px] '>
 				<Logo />
 
 				<AllLinks setIsOpen={setIsOpen} user={user} />
@@ -34,7 +33,7 @@ export default function Component({ user }: NavbarProps = {}) {
 			</div>
 
 			<div
-				className={`fixed left-0 top-[78px] z-10 flex w-full flex-col items-end justify-start gap-4 overflow-hidden bg-[#333333a7] transition-all duration-300 ease-in-out ${
+				className={`fixed left-0 top-[68px] z-50 flex w-full flex-col items-end justify-start gap-4 overflow-hidden bg-[#333333a7] transition-all duration-300 ease-in-out ${
 					isOpen ? 'h-[94vh]' : 'h-0'
 				}`}>
 				<div

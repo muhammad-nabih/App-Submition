@@ -14,7 +14,7 @@ import {
 	updateTaskStatus,
 	addTask,
 } from '@/store/features/shiftSlice';
-// import { v4 as uuidv4 } from 'uuid';
+
 import ActionButton from './ActionButton';
 import { Button } from '@/components/ui/button';
 import { FaCheck } from 'react-icons/fa6';
@@ -27,7 +27,7 @@ const { randomUUID } = new ShortUniqueId({ length: 10 });
 
 const Time: React.FC = () => {
 	const dispatch = useAppDispatch();
-	const { setIsShow } = usePreviewContext();
+	const { setIsShow, setIsSaved } = usePreviewContext();
 	const shifts = useAppSelector((state) => state.shifts.shifts);
 	const [currentShiftId, setCurrentShiftId] = useState<string | null>(null);
 	const [isEditing, setIsEditing] = useState(true);
@@ -138,6 +138,7 @@ const Time: React.FC = () => {
 	};
 
 	const handleSaveShift = () => {
+		setIsSaved(true);
 		if (currentShiftId) {
 			setIsEditing(false);
 		} else {
@@ -172,10 +173,11 @@ const Time: React.FC = () => {
 	const handleAddNewShift = () => {};
 
 	const handleCancelShift = () => {};
+
 	return (
-		<form className='min-w-[320px] space-y-4'>
+		<form className='mt-6 min-w-[320px] space-y-4'>
 			<div>
-				<h2 className='mb-4 text-xl font-bold'>Time</h2>
+				<h2 className='my-4 text-xl font-bold'>Time</h2>
 				<section className='flex w-full gap-4'>
 					<div className='flex-grow space-y-2'>
 						<label htmlFor='startTime' className='block text-primary-dark'>
@@ -242,6 +244,7 @@ const Time: React.FC = () => {
 							Task Details {index + 1} <span className='text-error'>*</span>
 						</h3>
 						<Textarea
+							required
 							value={task.details}
 							onChange={(e) => handleTaskDetailsChange(task.id, e.target.value)}
 							disabled={!isEditing}
@@ -282,51 +285,52 @@ const Time: React.FC = () => {
 				</div>
 			))}
 
-			<div className='flex items-center justify-end gap-4 py-2'>
-				<ActionButton
-					text='Add New Task'
-					variant='rounded'
-					onClick={handleAddNewTask}
-					disabled={!isEditing}
-				/>
-			</div>
+			<section className='sticky bottom-0 w-full bg-card z-10'>
+				<div className='flex items-center justify-end gap-4 py-2'>
+					<ActionButton
+						text='Add New Task'
+						variant='rounded'
+						onClick={handleAddNewTask}
+						disabled={!isEditing}
+					/>
+				</div>
 
-			<div className='flex items-center justify-end gap-4 py-2'>
-				<Button
-					type='button'
-					onClick={() => setIsEditing(true)}
-					disabled={isEditing}
-					className='h-10 min-w-[120px] flex-1 items-center justify-center bg-[#00150B0D] text-lg text-primary-dark duration-200 hover:bg-primary-dark hover:text-white max-md:flex'>
-					<MdEdit />
-					Edit
-				</Button>
+				<div className='flex items-center justify-end gap-4 py-2'>
+					<Button
+						type='button'
+						onClick={() => setIsEditing(true)}
+						disabled={isEditing}
+						className='h-10 min-w-[120px] flex-1 items-center justify-center bg-[#00150B0D] text-lg text-primary-dark duration-200 hover:bg-primary-dark hover:text-white max-md:flex'>
+						<MdEdit />
+						Edit
+					</Button>
 
-				<Button
-					onClick={handleSaveShift}
-					type='button'
-					disabled={!isEditing}
-					className='h-10 min-w-[120px] flex-1 items-center justify-center bg-primary text-lg text-primary-dark duration-200 max-md:flex'>
-					<FaCheck />
-					Save Shift{lastShift}
-				</Button>
-			</div>
+					<Button
+						onClick={handleSaveShift}
+						type='button'
+						disabled={!isEditing}
+						className='h-10 min-w-[120px] flex-1 items-center justify-center bg-primary text-lg text-primary-dark duration-200 max-md:flex'>
+						<FaCheck />
+						Save Shift{lastShift}
+					</Button>
+				</div>
 
-			<div className='flex items-center justify-end gap-4 py-2'>
-				<ActionButton
-					text='Add Another Shift'
-					variant='square'
-					fullWidth={true}
-					onClick={handleAddNewShift}
-					disabled={!isEditing}
-				/>
-				<Button
-					type='button'
-					onClick={() => setIsShow(true)}
-					className='hidden h-11 w-full self-end rounded-sm bg-primary py-3 font-semibold text-primary-foreground hover:bg-accent-hover max-md:block'>
-					Next
-				</Button>
-				<SubmissionPreview />
-			</div>
+				<div className='flex items-center justify-end gap-4 py-5'>
+					<ActionButton
+						text='Add Another Shift'
+						variant='square'
+						fullWidth={true}
+						onClick={handleAddNewShift}
+						disabled={!isEditing}
+					/>
+					<Button
+						type='button'
+						onClick={() => setIsShow(true)}
+						className='hidden h-11 w-full self-end rounded-sm bg-primary py-3 font-semibold text-primary-foreground hover:bg-accent-hover max-md:block'>
+						Next
+					</Button>
+				</div>
+			</section>
 		</form>
 	);
 };

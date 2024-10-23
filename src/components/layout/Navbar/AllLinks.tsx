@@ -16,8 +16,12 @@ const AllLinks: React.FC<AllLinksProps> = ({ setIsOpen, user }) => {
 				<NavLinks setOpen={setIsOpen} />
 			</div>
 			<div className='hidden items-center gap-2 md:flex'>
-				{user ? <UserProp user={user} /> : <p>No user data</p>}
-				<Logout />
+				{user && (
+					<>
+						<UserProp user={user} />
+						<Logout />
+					</>
+				)}
 			</div>
 		</>
 	);
