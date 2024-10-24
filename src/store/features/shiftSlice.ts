@@ -1,23 +1,5 @@
+import { ShiftsState, ShiftState, Task } from '@/types/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Task {
-	id: string;
-	name: string;
-	details: string;
-	status: 'Still Needs to Work' | 'Done';
-}
-
-interface ShiftState {
-	id: string;
-	startTime: string;
-	endTime: string;
-	breakTime: string;
-	tasks: Task[];
-}
-
-interface ShiftsState {
-	shifts: ShiftState[];
-}
 
 const initialState: ShiftsState = {
 	shifts: [],

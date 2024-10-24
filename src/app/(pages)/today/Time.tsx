@@ -170,7 +170,17 @@ const Time: React.FC = () => {
 		}
 	};
 
-	const handleAddNewShift = () => {};
+	const handleAddNewShift = () => {
+		dispatch(
+			addShift({
+				id: randomUUID(),
+				startTime: inputs.startTime,
+				endTime: inputs.endTime,
+				breakTime: inputs.breakTime,
+				tasks: tasks,
+			}),
+		);
+	};
 
 	const handleCancelShift = () => {};
 
@@ -285,7 +295,7 @@ const Time: React.FC = () => {
 				</div>
 			))}
 
-			<section className='sticky bottom-0 w-full bg-card z-10'>
+			<section className='sticky bottom-0 z-10 w-full bg-card'>
 				<div className='flex items-center justify-end gap-4 py-2'>
 					<ActionButton
 						text='Add New Task'
